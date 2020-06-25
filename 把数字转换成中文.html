@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>leetcode</title>
+</head>
+
+<body>
+    <h1>完成将 toChineseNum， 可以将数字转换成中文大写的表示，处理到万级别，例如 toChineseNum(12345)，返回 一万二千三百四十五。</h1>
+    <script>
+        // 完成将 toChineseNum， 可以将数字转换成中文大写的表示，处理到万级别，例如 toChineseNum(12345)，返回 一万二千三百四十五。
+
+        function toChineseNum(num = '') {
+            if (isNaN(num) || num === null || num === '') return '';
+            num = num.toString();
+            const cnNum = '零一二三四五六七八九';
+            const cnUnit = '十百千万十百千亿十百千万';
+            const cnDot = '点';
+            const cnDotIndex = num.indexOf('.');
+            const intNum = num.split('.')[0]
+            const dotNum = num.split('.')[1]
+            const len = intNum.length;
+            let result = '';
+
+            intNum.split('').forEach((el, i) => {
+                if (!(result.endsWith('零') && el == 0)) result += cnNum.substr(el * 1, 1);
+                if (i === len - 1) return;
+                const unit = cnUnit.substr(len - i - 2, 1)
+                if ('亿万'.includes(unit)) {
+                    result += unit;
+                } else if (el > 0) {
+                    result += unit;
+                }
+            })
+            result = result.replace(/(零)(万|亿)/g, "$2").replace(/(亿)(万)/, "$1").replace(/(零)$/g, "");
+            if (dotNum) {
+                result += cnDot;
+                dotNum.split('').forEach((el, i) => {
+                    result += cnNum.substr(el * 1, 1);
+                })
+            }
+            return result;
+        }
+
+        console.log(toChineseNum(70100010.20))
+    </script>
+
+</body>
+
+</html>
