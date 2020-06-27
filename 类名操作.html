@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>类名操作</title>
+</head>
+
+<body>
+    <h1>类名操作</h1>
+    <p>完成几个 DOM 元素类名操作的工具方法：</p>
+    <ol>
+        <li>addClass(dom, name)：给 dom 元素添加类名 name</li>
+        <li>removeClass(dom, name)：把 dom 元素的类名 name 删除</li>
+        <li>hasClass(dom, name)：判断 dom 元素是否有类名 name</li>
+    </ol>
+    <script>
+        const addClass = (dom, name) => {
+            if (!dom || !name) return;
+            dom.classList && dom.classList.add(name);
+        }
+        const removeClass = (dom, name) => {
+            if (!dom || !name) return;
+            dom.classList && dom.classList.remove(name);
+        }
+        const hasClass = (dom, name) => {
+            if (!dom || !name) return;
+            return dom.classList && dom.classList.contains(name);
+        }
+    </script>
+</body>
+
+</html>
