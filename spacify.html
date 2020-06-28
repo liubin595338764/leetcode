@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>spacify</title>
+</head>
+
+<body>
+    <h1>spacify</h1>
+    <p>请你给字符串都添加上原型方法 spacify，可以让一个字符串的每个字母都多出一个空格的间隔：</p>
+    <pre>
+"ScriptOJ".spacify() // => "S c r i p t O J"
+    </pre>
+
+    <script>
+        String.prototype.spacify = function () {
+            return this.split("").join(' ');
+        }
+        console.log("".spacify())
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Virtual DOM（二）</title>
+</head>
+
+<body>
+    <h1>在 Virtual DOM 的基础上给 VNode 类添加 render 方法，render 方法把一个虚拟的 DOM 节点渲染成真正的 DOM 节点，例如：</h1>
+    <pre>
+const ul = h('ul', {id: 'list', style: 'color: red'}, [
+    h('li', {class: 'item'}, ['Item 1']),
+    h('li', {class: 'item'}, ['Item 2']),
+    h('li', {class: 'item'}, ['Item 3'])
+]
+
+const urlDom = ul.render() // 渲染 DOM 节点和它的子节点
+ulDom.getAttribute('id') === 'list' // true
+ulDom.querySelectorAll('li').length === 3 // true
+    </pre>
+
+    <script>
+        class VNode {
+            constructor(tagName, props, children) {
+                this.tagName = tagName
+                this.props = props
+                this.children = children
+                this.render = this.render.bind(this)
+            }
+            createEl(tagName, props) {
+                const el = document.createElement(tagName);
+                for (const key in props) {
+                    el.setAttribute(key, props[key])
+                }
+                return el;
+            }
+            render() {
+                const elWrap = this.createEl(this.tagName, this.props)
+                if (Array.isArray(this.children)) {
+                    this.children.forEach(item => {
+                        const el = item instanceof VNode ? item.render() : document.createTextNode(item);
+                        elWrap.appendChild(el)
+                    });
+                }
+                return elWrap;
+            }
+        }
+        function h(tagName, props, children) {
+            return new VNode(tagName, props, children)
+        }
+        const ul = h('ul', { id: 'list', style: 'color: red' }, [
+            h('li', { class: 'item' }, ['Item 1']),
+            h('li', { class: 'item' }, ['Item 2']),
+            h('li', { class: 'item' }, ['Item 3'])
+        ])
+        const urlDom = ul.render()
+        console.log(urlDom)
+    </script>
+</body>
+
+</html>
