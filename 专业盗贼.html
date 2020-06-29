@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>专业盗贼</title>
+</head>
+
+<body>
+    <h3>你是一个盗窃专家，某一天晚上你要去盗窃某一条街道的一排房子。这些房子都有相连的防盗系统，如果你把相邻的两家都偷了那么就会触发报警器。</h3>
+    <p>用一个数组来表示这些房子的金钱数量，请你完成 rob 函数，计算出在不触发报警器的情况下最多能偷多少钱。例如：</p>
+    <pre>
+rob([1, 2, 3]) // => 4
+    </pre>
+    <script>
+        const rob = (nums) => {
+            if (!nums || !nums.length) {
+                return 0
+            } else if (nums.length < 2) {
+                return Math.max(...nums)
+            }
+            let accArr = [nums[0]].concat([Math.max(...nums.slice(0, 2))]);
+            for (let i = 2; i < nums.length; i++) {
+                const cur = nums[i];
+                const prev = accArr[i - 1];
+                const curFake = cur + accArr[i - 2]
+                accArr.push(curFake > prev ? curFake : prev)
+            }
+            console.log(accArr)
+            return accArr[accArr.length - 1];
+        }
+        console.log(rob([118, 136, 202, 303]))
+    </script>
+</body>
+
+</html>
