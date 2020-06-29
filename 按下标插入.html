@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>按下标插入</title>
+</head>
+
+<body>
+    <h3>现在有一个数组存放字符串数据：</h3>
+    <pre>
+['item1', 'item2', 'item3', 'item4', 'item5']
+    </pre>
+    <p>有另外一个数组存放一组对象：</p>
+    <pre>
+[
+    { content: 'section1', index: 0 },
+    { content: 'section2', index: 2 }
+]
+    </pre>
+    <p>它每个对象表示的是会往原来的数组的 index 坐标插入 content 数据（index 不会重复）：</p>
+    <pre>
+0      1      2      3      4
+item1  itme2  item3  item4  item5
+^             ^ 
+|             |
+section1     section2  
+
+最后结果是：['section1', 'item1', 'item2', 'section2', 'item3', 'item4', 'item5']
+    </pre>
+    <p>请你完成 injectSections 函数，可以达到上述的功能：</p>
+    <pre>
+injectSections(
+    ['item1', 'item2', 'item3', 'item4', 'item5'],
+    [
+        { content: 'section1', index: 0 },
+        { content: 'section2', index: 2 }
+    ]
+) // => ['section1', 'item1', 'item2', 'section2', 'item3', 'item4', 'item5']
+    </pre>
+    <script>
+        const injectSections = (items, sections) => {
+            if (Array.isArray(sections)) {
+                sections.sort((a, b) => a.index - b.index)
+                sections.forEach((el, i) => {
+                    items.splice(el.index + i, 0, el.content)
+                })
+            }
+            return items;
+        }
+        console.log(injectSections(
+            ["item1", "item2", "item3", "item4", "item5"],
+            [{ "content": "section0", "index": 3 }, { "content": "section1", "index": 4 }, { "content": "section2", "index": 1 }, { "content": "section3", "index": 0 }]
+        ))
+    </script>
+</body>
+
+</html>
