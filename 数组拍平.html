@@ -30,8 +30,18 @@
             })
             return result;
         }
+        // 解法三
+        const flatten3 = (arr) => {
+            if (arr.length === 0) return [];
+            const reg = /\[|\]/g;
+            let str = JSON.stringify(arr);
+            str = str.replace(reg, '')
+            str = str.split(',').map(Number)
+            return str;
+        }
         console.log(flatten(data))
         console.log(flatten2(data))
+        console.log(flatten3(data))
     </script>
 </body>
 
