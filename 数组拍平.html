@@ -13,10 +13,25 @@
     <p>例如传入：[1, [[2], 3, 4], 5]，返回 [1, 2, 3, 4, 5]。</p>
     <script>
         const data = [1, [[2], 3, 4], 5];
+        // 解法一
         const flatten = (arr) => {
             return arr.length ? arr.toString().split(',').map(Number) : []
         }
+        // 解法二
+        const flatten2 = (arr) => {
+            let result = []
+            arr.forEach(el => {
+                if (typeof (el) === 'number') {
+                    result.push(el);
+                } else {
+                    const item = flatten2.call(null, el);
+                    result = result.concat(item)
+                }
+            })
+            return result;
+        }
         console.log(flatten(data))
+        console.log(flatten2(data))
     </script>
 </body>
 
