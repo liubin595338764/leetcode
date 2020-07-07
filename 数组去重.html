@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>数组去重</title>
+</head>
+
+<body>
+    <h1>数组去重</h1>
+    <p>编写一个函数 unique(arr)，返回一个去除数组内重复的元素的数组。例如：</p>
+    <pre>
+unique([0, 1, 2, 2, 3, 3, 4]) // => [0, 1, 2, 3, 4]
+unique([0, 1, '1', '1', 2]) // => [0, 1, '1', 2]        
+    </pre>
+    <script>
+        const unique = (arr) => {
+            const _set = new Set(arr);
+            return [..._set]
+        }
+        console.log(unique([0, 1, 2, 2, 3, 3, 4]))
+        console.log(unique([0, 1, '1', '1', 2]))
+    </script>
+</body>
+
+</html>
