@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>优先队列</title>
+</head>
+
+<body>
+    <h1>优先队列是一种元素带权重的队列，你可以往队列中添加和删除元素，但是删除元素的时候会把优先级最高的元素删除。</h1>
+    <p>例如：</p>
+    <pre>
+const pq = new PriorityQueue()
+pq.add(1)
+pq.add(2)
+pq.add(3)
+
+pq.remove() // => 3
+pq.remove() // => 2
+pq.remove() // => 1
+    </pre>
+    <p>remove 方法每次删除的时候都会把最大的元素删除掉，并且返回被删除元素。请你完成 PriorityQueue 的实现。</p>
+    <p>服务器运行时间限制：20ms。</p>
+    <script>
+        class PriorityQueue {
+            constructor() {
+                this.queue = [];
+            }
+
+            add(n) {
+                this.queue.push(n)
+            }
+
+            remove() {
+                const max = Math.max.apply(null, this.queue)
+                const maxIndex = this.queue.findIndex(el => el === max)
+                this.queue.splice(maxIndex, 1)
+                return max
+            }
+        }
+        const pq = new PriorityQueue()
+        pq.add(1)
+        pq.add(2)
+        pq.add(3)
+
+        console.log(pq.remove() === 3)
+        console.log(pq.remove() === 2)
+        console.log(pq.remove() === 1)
+    </script>
+</body>
+
+</html>
