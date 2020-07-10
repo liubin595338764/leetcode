@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>判断美元符号格式</title>
+</head>
+
+<body>
+    <h2>完成一个函数 isUSDFormat 返回 true/false 来判断一个字符串是否符合美元格式</h2>
+    <ol>
+        <li>以 $ 开头</li>
+        <li>如果是小数，保留两位小数；如果不是小数则不显示小数部分</li>
+        <li>整数部分从小数点上一位开始每隔三位用 , 分割开来</li>
+        <li>如果整数部分从数字 0 开始，则只会显示一位 0</li>
+    </ol>
+    <p>例如：</p>
+    <pre>
+isUSDFormat('$1') // => true
+isUSDFormat('$1.0') // => false
+isUSDFormat('$100,000.00') // => true
+isUSDFormat('$0,000.00') // => false
+isUSDFormat('$0.00') // => true
+isUSDFormat('$11,23,345.33') // => false
+isUSDFormat('$1,123,345.33') // => true
+    </pre>
+    <script>
+        // 方法一
+        const isUSDFormat = str => (/^\$([1-9]\d{0,2}(,\d{3})*|0)(\.\d{2})?$/).test(str)
+        // 方法二
+        const isUSDFormat2 = (str) => {
+            if (typeof (str) !== 'string' || !str.startsWith('$') || str.startsWith('$.')) return false;
+            str = str.slice(1);
+            if (str.split('.')[1] && str.split('.')[1].length !== 2) return false;
+            if (isNaN(str.replace(/,/g, ''))) return false;
+            str = str.split('.')[0]
+            if (str.length > 1 && Number(str.replace(/,/g, '')) === 0) return false;
+            let flag = true;
+            str.split(',').forEach((el, i) => {
+                if (el.length > 3 || el.length === 0) {
+                    return flag = false
+                } else if (i === 0 && el.length > 1 && el.startsWith('0')) {
+                    return flag = false
+                } else if (i > 0 && el.length !== 3) {
+                    return flag = false
+                }
+            })
+            return flag;
+        }
+        console.log(isUSDFormat('$,550') === false)
+        console.log(isUSDFormat('$1.19.47') === false)
+        console.log(isUSDFormat('$100,000.00') === true)
+        console.log(isUSDFormat('$001,000.00') === false)
+        console.log(isUSDFormat('$0,000.00') === false)
+        console.log(isUSDFormat('$0.00') === true)
+        console.log(isUSDFormat('$11,23,345.33') === false)
+        console.log(isUSDFormat('$1,123,345.33') === true)
+    </script>
+</body>
+
+</html>
