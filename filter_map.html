@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>filter map</title>
+</head>
+
+<body>
+    <h1>filter map</h1>
+    <p>请你给原生的 Map 添加方法 filterKeys 和 filterValues，可以类似于于数组方法的 filter。它们分别可以对 Map 的键和值进行筛选，它们会返回一个新的 Map， 是对原有的 Map 的筛选结果</p>
+    <p>例如：</p>
+    <pre>
+const m = new Map([['Jerry', 12], ['Jimmy', 13], ['Tomy', 14]])
+
+m.filterKeys((key) => key.startsWith('J')) // => Map { Jerry => 12, Jimmy => 13 }
+m.filterValues((val) => val >= 13) // => Map { Jimmy => 13, Tomy => 14  }
+
+// 原有的 map 保持不变
+console.log(m) // => Map { Jerry => 12 , Jimmy => 13, Tomy => 14 }
+    </pre>
+    <script>
+        const m = new Map([['Jerry', 12], ['Jimmy', 13], ['Tomy', 14]])
+        Map.prototype.filterKeys = function (fn) {
+            const newMap = new Map();
+            for (const [key, val] of this) {
+                if (fn && fn(key)) newMap.set(key, val)
+            }
+            return newMap;
+        }
+        Map.prototype.filterValues = function (fn) {
+            const newMap = new Map();
+            for (const [key, val] of this) {
+                if (fn && fn(val)) newMap.set(key, val)
+            }
+            return newMap;
+        }
+        const m1 = m.filterKeys((key) => key.startsWith('J'))
+        const m2 = m.filterValues((val) => val >= 13)
+        console.log('m1', m1)
+        console.log('m2', m2)
+    </script>
+</body>
+
+</html>
